@@ -3,13 +3,17 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import { useState } from 'react'
 import TikAPI from 'tikapi';
+import useSwr from 'swr'
 
 
 const inter = Inter({ subsets: ['latin'] })
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 function Home() {
   const [handle, setHandle] = useState('')
+  const { data, error } = useSwr<any[]>('/api/hello', fetcher)
+  console.log('incomp',data)
 
   const handleClick = async () => {
     // const data = fetch()
@@ -48,20 +52,5 @@ function Home() {
   )
 }
 
-Home.getInitialProps = async () => {
-  const api = TikAPI(process.env.NEXT_SERVER_TIKAPI);
-  (async function(){
-    try{
-        let response = await api.public.check({
-            username: "lilyachty"
-        });
-        console.log(response.json);
-    }
-    catch(err: any){
-        console.log(err?.statusCode, err?.message, err?.json)
-    }	
-})();
-  // return { stars: json.stargazers_count }
-}
 
 export default Home
