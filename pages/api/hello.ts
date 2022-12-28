@@ -16,7 +16,6 @@ export default function handler(
         let response = await api.public.check({
             username: "nickrosenski" // secUID "MS4wLjABAAAAObSXkY9qaGCt-2GUIb7K5dq0ZfwWm88U5exBeBrWVFz0arfrkle7GypnbLwcBAgv"
         });
-        console.log('inapi',response.json);
         res.status(200).json(response.json)
     }
     catch(err: any){
